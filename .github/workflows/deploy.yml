@@ -1,0 +1,37 @@
+name: Deploy React app on GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # checkout Reposotries
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # setup Node. js
+      - name: setup Node. js
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18
+
+      # setup Dependencies
+      - name: setup Node. js
+        run: npm run install
+
+        # Build Projests
+      - name: Build Projects
+        run: npm run build
+
+        # Deploy to github pages
+      - name: deploy to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with : 
+            github_token : ${{secrets.GITHUB_TOKEN}}
+            publish_dir: dist
+        
